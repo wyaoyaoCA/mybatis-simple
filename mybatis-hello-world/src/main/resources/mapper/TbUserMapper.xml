@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    namespace: 名称空间
+    id: 唯一标识
+    resultType： 返回值类型，返回数据库的数据的数据呗，而我们已经构建了一个实体来对应数据库表，所以返回值类型，就是对应实体的全类名
+-->
+<mapper namespace="study.wyy.mybatis.helloworld.mapper.TbUserMapper">
+    <select id="selectById" resultType="study.wyy.mybatis.helloworld.model.TbUser">
+        select `id`, `username`, `password`, `phone`, `create_time` as `createTime`, `update_time` as `updateTime`
+        from tb_user where id = #{id}
+    </select>
+
+    <!--
+           parameterType: 指定查询参数类型，已经配置了别名，所以可以直接使用别名，而不需要全类名
+           useGeneratedKeys: 使用自增主键获取策略
+           keyProperty： 指定主键对应的java实体属性
+     -->
+    <insert id="insert" parameterType="tbUser" useGeneratedKeys="true" keyProperty="id">
+        insert into 
+            tb_user(`username`, `password`, `phone`,`create_time`,`update_time`)
+        values (#{username},#{password},#{phone},now(),now())
+    </insert>
+
+    <!--
+        parameterType: 指定查询参数类型，已经配置了别名，所以可以直接使用别名，而不需要全类名
+    -->
+    <update id="updateById" parameterType="tbUser">
+        update tb_user
+        set
+            `username` = #{username},
+            `password` = #{password},
+            `phone` = #{phone},
+            `update_time` = now()
+        where
+            id = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="long">
+        delete from
+            tb_user
+        where
+            `id` = #{id}
+    </delete>
+    <!--
+           parameterType: 指定查询参数类型，
+            mybatis为java常用类型都内置了别名，比如map,list
+       -->
+    <select id="count" parameterType="map" resultType="long">
+        select
+            count(1)
+        from
+            tb_user
+        where
+            `id` = #{id} and
+            `username` = #{username} and
+            `phone` = #{phone}
+    </select>
+
+
+
+
+</mapper>

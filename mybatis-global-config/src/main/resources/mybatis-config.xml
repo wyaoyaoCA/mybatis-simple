@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties"></properties>
+    <!--
+    settings包含很多重要的设置项
+		setting:用来设置每一个设置项
+			name：设置项名
+			value：设置项取值
+    -->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <!-- typeAliases, 可以为java类型起别名   -->
+    <typeAliases>
+        <!--
+            type: 指定要起别名的类型的全类名
+            alias: 该类型的别名：默认值就是类名首字母小写
+         -->
+        <!--
+        <typeAlias type="study.wyy.mybatis.config.model.TbUser" alias="TbUser"></typeAlias>
+        -->
+        <!--
+            通过name属性，为指定的包和其子包下的每一个java类型起别名，默认是类名首字母小写
+            如果想为某一个类不使用默认别名，就可以使用@Alias("别名")，为其定义特殊的类型
+         -->
+        <package name="study.wyy.mybatis.config.model"/>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--配置数据库链接驱动-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <!--配置数据库链接地址-->
+                <property name="url" value="${jdbc.url}"/>
+                <!--配置数据库链用户名-->
+                <property name="username" value="${jdbc.username}"/>
+                <!--配置数据库链接密码-->
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--配置数据库链接驱动-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <!--配置数据库链接地址-->
+                <property name="url" value="${jdbc.url}"/>
+                <!--配置数据库链用户名-->
+                <property name="username" value="${jdbc.username}"/>
+                <!--配置数据库链接密码-->
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="SQL Server" value="sqlserver"/>
+        <property name="DB2" value="db2"/>
+        <property name="Oracle" value="oracle" />
+        <property name="MySQL" value="mysql" />
+    </databaseIdProvider>
+    <mappers>
+        <!--
+            resource: 引用类路径下的sql映射文件
+            url：引用网络路径或者磁盘路径下的sql映射文件：
+            class：注册Mapper接口
+                - sql映射文件，必须和接口同名，并且放在同一目录下
+                - class的主要场景是：没有sql映射文件，而是使用注解开发，直接Mapper接口使用注解写sql语句，这个时候就可以把这个接口的全路径写上
+         -->
+        <mapper resource="mapper/TbUserMapper.xml"/>
+        <!--<mapper url="file:///var/mappers/TbUserMapper.xml"/>-->
+        <!-- <mapper class="study.wyy.mybatis.config.mapper.TbUserMapperAnnotation"/>-->
+        <!--
+            批量注册注册Mapper接口：将包内的Mapper接口实现全部注册为映射器 ，同样也要求：
+                 - sql映射文件，必须和接口同名，并且放在同一目录下
+        -->
+        <!--<package name="study.wyy.mybatis.config.mapper"/>-->
+    </mappers>
+</configuration>

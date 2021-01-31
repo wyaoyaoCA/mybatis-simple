@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    namespace: 名称空间
+    id: 唯一标识
+    resultType： 返回值类型，返回数据库的数据的数据呗，而我们已经构建了一个实体来对应数据库表，所以返回值类型，就是对应实体的全类名
+-->
+<mapper namespace="study.wyy.mybatis.sqlmapper.mapper.TbUserMapper">
+
+    <select id="selectById" resultType="study.wyy.mybatis.sqlmapper.model.TbUser" parameterType="long">
+        select
+            *
+        from
+            tb_user
+        where
+            id = #{id}
+    </select>
+
+
+
+    <select id="selectByUsernameAndPhone" resultType="study.wyy.mybatis.sqlmapper.model.TbUser">
+        select
+            *
+        from
+            tb_user
+        where
+            `username` = #{param1} AND
+            `phone` = #{param2}
+    </select>
+
+    <select id="selectByUsernameAndPhone2" resultType="study.wyy.mybatis.sqlmapper.model.TbUser">
+        select
+            *
+        from
+            tb_user
+        where
+            `username` = #{username} AND
+            `phone` = #{phone}
+    </select>
+
+
+    <select id="selectByPojo" resultType="study.wyy.mybatis.sqlmapper.model.TbUser">
+        select
+            *
+        from
+            tb_user
+        where
+            `username` = #{username} AND
+            `phone` = #{phone}
+    </select>
+
+    <select id="selectByMap" resultType="study.wyy.mybatis.sqlmapper.model.TbUser">
+        select
+            *
+        from
+            tb_user
+        where
+            `username` = #{username} AND
+            `phone` = #{phone}
+    </select>
+
+    <select id="selectByIds" resultType="study.wyy.mybatis.sqlmapper.model.TbUser" >
+        select
+            *
+        from
+            tb_user
+        where
+            <!--取出第一个元素-->
+            id = #{ids[0]}
+    </select>
+
+
+
+    <select id="select1" resultType="study.wyy.mybatis.sqlmapper.model.TbUser" >
+        select
+        *
+        from
+        tb_user
+        where
+        `id` = #{id} AND
+        `phone` = #{param2}
+    </select>
+
+    <select id="select2" resultType="study.wyy.mybatis.sqlmapper.model.TbUser" >
+        select
+        *
+        from
+        tb_user
+        where
+        `id` = #{param1} AND
+        `phone` = #{param2.phone}
+    </select>
+
+
+    <select id="select3" resultType="study.wyy.mybatis.sqlmapper.model.TbUser" >
+        select
+        *
+        from
+        tb_user
+        where
+        `id` = #{id} AND
+        `phone` = #{user.phone}
+    </select>
+
+    <select id="select4" resultType="study.wyy.mybatis.sqlmapper.model.TbUser" >
+        select
+        *
+        from
+        tb_user
+        where
+        `id` = #{id} AND
+        `phone` = #{phone}
+    </select>
+
+    <select id="select5" resultType="study.wyy.mybatis.sqlmapper.model.TbUser">
+        select
+            *
+        from
+            tb_user
+        where
+             `username` = '${username}' AND
+            `phone` = #{phone}
+    </select>
+
+
+    <select id="selectLike" resultType="study.wyy.mybatis.sqlmapper.model.TbUser">
+        select
+            *
+        from
+            tb_user
+        where
+             `username` like '%${username}%' AND
+            `phone` like '$'#{phone}'$'
+    </select>
+
+    <select id="select6" resultType="study.wyy.mybatis.sqlmapper.model.TbUser">
+        select
+            *
+        from
+            ${tableName}
+        where
+            id = #{id}
+    </select>
+</mapper>

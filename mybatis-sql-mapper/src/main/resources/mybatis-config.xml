@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties"></properties>
+
+    <settings>
+        <!--开启驼峰命名-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="useActualParamName" value="true"/>
+    </settings>
+    <!--配置别名-->
+    <typeAliases>
+        <package name="study.wyy.mybatis.helloworld.model.TbUser"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <!--指定事务管理器类型-->
+            <transactionManager type="JDBC"/>
+            <!--配置datasource-->
+            <dataSource type="POOLED">
+                <!--配置数据库链接驱动-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <!--配置数据库链接地址-->
+                <property name="url" value="${jdbc.url}"/>
+                <!--配置数据库链用户名-->
+                <property name="username" value="${jdbc.username}"/>
+                <!--配置数据库链接密码-->
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--多数据库支持-->
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="SQL Server" value="sqlserver"/>
+        <property name="DB2" value="db2"/>
+        <property name="Oracle" value="oracle" />
+        <property name="MySQL" value="mysql" />
+    </databaseIdProvider>
+    <!--注册映射文件-->
+    <mappers>
+        <mapper resource="mapper/TbUserMapper.xml"/>
+    </mappers>
+</configuration>
