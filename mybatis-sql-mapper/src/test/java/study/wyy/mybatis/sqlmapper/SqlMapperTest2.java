@@ -9,6 +9,7 @@ import org.junit.Test;
 import study.wyy.mybatis.sqlmapper.mapper.TbUserMapper;
 import study.wyy.mybatis.sqlmapper.mapper.TbUserMapper2;
 import study.wyy.mybatis.sqlmapper.model.TbUser;
+import study.wyy.mybatis.sqlmapper.model.TbUser2;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,5 +56,10 @@ public class SqlMapperTest2 {
         }
     }
 
+    @Test
+    public void test04() {
+        TbUser2 tbUser2 = tbUserMapper.select1(1L);
+        System.out.println(tbUser2);
+    }
 
 }

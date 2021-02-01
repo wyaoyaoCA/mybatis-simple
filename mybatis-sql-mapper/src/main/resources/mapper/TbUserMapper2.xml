@@ -37,4 +37,35 @@
     </select>
 
 
+    <!--
+        配置映射规则
+        id: 唯一标识
+        type: 对应的实体的全类名，当然也可以配置别名，我个人不喜欢配置，这样更清晰
+      -->
+    <resultMap id="userMap" type="study.wyy.mybatis.sqlmapper.model.TbUser2">
+        <!--
+            指定主键列的映射
+                column: 列名
+                property：java实体的属性名
+                jdbcType：jdbc类型，可不指定
+                javaType：java 类型，也可以不指定
+        -->
+        <id column="id" property="id"></id>
+        <result column="username" property="name"></result>
+        <result column="phone" property="mobile"></result>
+    </resultMap>
+
+    <!--
+    resultMap 指定映射规则的唯一标识
+    -->
+    <select id="select1" resultMap="userMap">
+        select
+            *
+        from
+            tb_user
+        where
+            id = #{id}
+    </select>
+
+
 </mapper>

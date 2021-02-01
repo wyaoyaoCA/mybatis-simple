@@ -4,6 +4,7 @@ package study.wyy.mybatis.sqlmapper.mapper;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 import study.wyy.mybatis.sqlmapper.model.TbUser;
+import study.wyy.mybatis.sqlmapper.model.TbUser2;
 
 import java.util.List;
 import java.util.Map;
@@ -23,5 +24,7 @@ public interface TbUserMapper2 {
     @MapKey("id")
     Map<Long, TbUser> selectMap();
 
+
+    TbUser2 select1(@Param("id") Long id);
 
 }
