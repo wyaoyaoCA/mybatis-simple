@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    namespace: 名称空间
+    id: 唯一标识
+    resultType： 返回值类型，返回数据库的数据的数据呗，而我们已经构建了一个实体来对应数据库表，所以返回值类型，就是对应实体的全类名
+-->
+<mapper namespace="study.wyy.mybatis.sqlmapper.mapper.TbUserMapper2">
+    <!--
+      如果返回值是一个集合，resultType并非指定为集合类型，`而是指定为集合内元素的类型`
+      -->
+    <select id="selectAll" resultType="TbUser">
+        select
+            *
+        from
+            tb_user
+    </select>
+
+
+    <select id="selectById" resultType="map">
+        select
+            *
+        from
+            tb_user
+        where
+            id = #{id}
+    </select>
+
+    <select id="selectMap" resultType="map">
+        select
+            *
+        from
+            tb_user
+    </select>
+
+
+</mapper>

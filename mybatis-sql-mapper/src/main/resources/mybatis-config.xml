@@ -12,7 +12,7 @@
     </settings>
     <!--配置别名-->
     <typeAliases>
-        <package name="study.wyy.mybatis.helloworld.model.TbUser"/>
+        <package name="study.wyy.mybatis.sqlmapper.model"/>
     </typeAliases>
 
     <environments default="development">
@@ -37,11 +37,12 @@
     <databaseIdProvider type="DB_VENDOR">
         <property name="SQL Server" value="sqlserver"/>
         <property name="DB2" value="db2"/>
-        <property name="Oracle" value="oracle" />
-        <property name="MySQL" value="mysql" />
+        <property name="Oracle" value="oracle"/>
+        <property name="MySQL" value="mysql"/>
     </databaseIdProvider>
     <!--注册映射文件-->
     <mappers>
         <mapper resource="mapper/TbUserMapper.xml"/>
+        <mapper resource="mapper/TbUserMapper2.xml"/>
     </mappers>
 </configuration>
