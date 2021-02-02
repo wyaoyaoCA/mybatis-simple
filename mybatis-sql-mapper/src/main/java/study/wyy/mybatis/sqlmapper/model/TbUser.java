@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author by wyaoyao
@@ -20,5 +21,7 @@ public class TbUser implements Serializable {
     private String phone;
     private String createTime;
     private String updateTime;
+    // 用户关联的地址
+    private List<TbAddress> addresses;
 
 }

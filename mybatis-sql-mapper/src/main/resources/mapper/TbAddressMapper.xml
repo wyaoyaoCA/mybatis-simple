@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    namespace: 名称空间
+    id: 唯一标识
+    resultType： 返回值类型，返回数据库的数据的数据呗，而我们已经构建了一个实体来对应数据库表，所以返回值类型，就是对应实体的全类名
+-->
+<mapper namespace="study.wyy.mybatis.sqlmapper.mapper.TbAddressMapper">
+
+    <resultMap id="addressMapper" type="study.wyy.mybatis.sqlmapper.model.TbAddress">
+        <id column="id" property="id"></id>
+        <result column="province" property="province"></result>
+        <result column="city" property="city"></result>
+        <result column="detail" property="detail"></result>
+        <result column="username" property="user.username"></result>
+        <result column="u_id" property="user.id"></result>
+        <result column="password" property="user.password"></result>
+        <result column="phone" property="user.phone"></result>
+    </resultMap>
+
+    <resultMap id="addressMapper2" type="study.wyy.mybatis.sqlmapper.model.TbAddress">
+        <id column="id" property="id"></id>
+        <result column="province" property="province"></result>
+        <result column="city" property="city"></result>
+        <result column="detail" property="detail"></result>
+        <!--
+        property: TbAddress实体中关联用户实体的属性
+        javaType: 关联实体的类型
+        -->
+        <association property="user" javaType="study.wyy.mybatis.sqlmapper.model.TbUser">
+            <!--
+              就不需要通过user.的方式，这里配置的就是user属性的映射关系
+            -->
+            <result column="username" property="username"></result>
+            <result column="u_id" property="id"></result>
+            <result column="password" property="password"></result>
+            <result column="phone" property="phone"></result>
+        </association>
+    </resultMap>
+
+    <!--
+        resultMap: addressMapper2和addressMapper都可以，两种不同的方式而已
+        -->
+    <select id="selectById" resultMap="addressMapper2">
+        select
+            a.id,
+            province,
+            city,
+            detail,
+            username,
+            u.id u_id,
+            `password`,
+            phone
+        from
+            tb_address a
+        LEFT join
+
+            tb_user u
+        on
+            a.user_id =u.id
+        where
+        a.id = #{id}
+    </select>
+
+    <resultMap id="addressMapper3" type="study.wyy.mybatis.sqlmapper.model.TbAddress">
+        <id column="id" property="id"></id>
+        <result column="province" property="province"></result>
+        <result column="city" property="city"></result>
+        <result column="detail" property="detail"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+        <!--
+        select: 表明当前属性是调用select指定的方法
+        select的取值规则：namespace + id
+        column: 指定那一列的值传给这个查询方法，一般就是关联字段。比如这里就是user_id,
+        -->
+
+        <association property="user" select="study.wyy.mybatis.sqlmapper.mapper.TbUserMapper.selectById"
+                     column="user_id"></association>
+    </resultMap>
+    <select id="selectById2" resultMap="addressMapper3">
+        select
+           *
+        from
+            tb_address a
+        where
+        a.id = #{id}
+    </select>
+
+
+    <select id="selectByUserId" resultType="study.wyy.mybatis.sqlmapper.model.TbAddress">
+        select
+           *
+        from
+            tb_address a
+        where
+        a.user_id = #{userId}
+    </select>
+</mapper>

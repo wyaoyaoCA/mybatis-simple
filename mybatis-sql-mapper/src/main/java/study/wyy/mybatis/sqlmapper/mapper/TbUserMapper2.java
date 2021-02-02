@@ -27,4 +27,9 @@ public interface TbUserMapper2 {
 
     TbUser2 select1(@Param("id") Long id);
 
+    TbUser selectByIdWithAddress(@Param("id") Long id);
+
+    TbUser selectByIdWithAddress2(@Param("id") Long id);
+
+
 }

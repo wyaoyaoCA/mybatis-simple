@@ -68,4 +68,67 @@
     </select>
 
 
+    <resultMap id="userMap2" type="study.wyy.mybatis.sqlmapper.model.TbUser">
+        <id column="id" property="id"></id>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+        <!--
+        TbUser 的addresses属性对应的就是地址表，可能是多个地址，是个集合
+        ofType：指定集合中元素的类型
+        -->
+        <collection property="addresses" ofType="study.wyy.mybatis.sqlmapper.model.TbAddress">
+            <id property="id" column="a_id"></id>
+            <result column="city" property="city"></result>
+            <result column="detail" property="detail"></result>
+            <result column="province" property="province"></result>
+            <result column="create_time" property="createTime"></result>
+            <result column="update_time" property="updateTime"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selectByIdWithAddress" resultMap="userMap2">
+        select
+            *,
+            a.id a_id
+        from
+            tb_user u
+        LEFT join
+
+            tb_address a
+        on
+            a.user_id =u.id
+        where
+            u.id = 1
+    </select>
+
+
+    <resultMap id="userMap3" type="study.wyy.mybatis.sqlmapper.model.TbUser">
+        <id column="id" property="id"></id>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+        <!--
+        TbUser 的addresses属性对应的就是地址表，可能是多个地址，是个集合
+        -->
+        <collection property="addresses" select="study.wyy.mybatis.sqlmapper.mapper.TbAddressMapper.selectByUserId"
+                    column="{userId=id}">
+            <id property="id" column="a_id"></id>
+            <result column="city" property="city"></result>
+            <result column="detail" property="detail"></result>
+            <result column="province" property="province"></result>
+            <result column="create_time" property="createTime"></result>
+            <result column="update_time" property="updateTime"></result>
+        </collection>
+    </resultMap>
+    <select id="selectByIdWithAddress2" resultMap="userMap3">
+        select
+            *
+        from
+            tb_user u
+        where
+            u.id = #{id}
+    </select>
 </mapper>
