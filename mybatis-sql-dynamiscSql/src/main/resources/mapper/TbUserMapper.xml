@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    namespace: 名称空间
+    id: 唯一标识
+    resultType： 返回值类型，返回数据库的数据的数据呗，而我们已经构建了一个实体来对应数据库表，所以返回值类型，就是对应实体的全类名
+-->
+<mapper namespace="study.wyy.mybatis.dynamisc.mapper.TbUserMapper">
+
+    <select id="selectUser" resultType="study.wyy.mybatis.dynamisc.model.TbUser">
+        select
+        *
+        from
+        tb_user
+        <where>
+            <if test="id != null">
+                `id` = #{id}
+            </if>
+            <if test="username != null">
+                and `username` = #{username}
+            </if>
+            <if test="phone != null and phone.trim() != null">
+                and `phone` = #{phone}
+            </if>
+            <if test="password != null">
+                and `password` = #{password}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectUser2" resultType="study.wyy.mybatis.dynamisc.model.TbUser">
+        select
+        *
+        from
+        tb_user
+        <!--前面 整个添加一个前缀 where
+        去掉整个字符串后面多余的and
+        -->
+        <trim prefix="where" suffixOverrides="and">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="username != null">
+                `username` = #{username} and
+            </if>
+            <if test="phone != null and phone.trim() != null">
+                `phone` = #{phone} and
+            </if>
+            <if test="password != null">
+                `password` = #{password}
+            </if>
+        </trim>
+    </select>
+
+
+    <select id="selectUser3" resultType="study.wyy.mybatis.dynamisc.model.TbUser">
+        select
+        *
+        from
+        tb_user
+        <where>
+            <choose>
+                <!-- 如果用户ID不为空，就是根据用户id查询-->
+                <when test="id != null">
+                    id=#{id}
+                </when>
+                <!-- 如果用户ID为空，但是用户名不为空，就是根据用户名模糊查询-->
+                <when test="username!=null">
+                    username like '$'#{username}'$'
+                </when>
+                <!-- 如果用户ID和用户名都为空，就是查询id=1  也就是otherwise相当于 switch case 的default分支-->
+                <otherwise>
+                    id = 1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!--    Boolean update(TbUser tbUser);-->
+    <update id="update">
+        update
+        tb_user
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="phone != null">
+                phone = #{phone}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="selectByIds" resultType="study.wyy.mybatis.dynamisc.model.TbUser">
+        select
+        *
+        from
+        tb_user
+        where id in
+        <!--
+             collection：指定要遍历的集合：
+             item：将当前遍历出的元素赋值给指定的变量
+             separator:每个元素之间的分隔符
+             index:索引。遍历list的时候是index就是索引，item就是当前值
+	            遍历map的时候index表示的就是map的key，item就是map的值
+
+        -->
+        <foreach collection="ids" item="item_id" open="(" close=")" separator=",">
+            #{item_id}
+        </foreach>
+    </select>
+
+    <!-- 批量保存
+     Boolean creates(@Param("tbUsers") List<TbUser> tbUsers);
+     -->
+    <!--MySQL下批量保存：可以foreach遍历   mysql支持values(),(),()语法-->
+    <insert id="creates">
+        insert into tb_user(username,password,phone,create_time,update_time)
+        values
+        <foreach collection="tbUsers" item="user" separator=",">
+            (#{user.username},#{user.password},#{user.phone},now(),now())
+        </foreach>
+    </insert>
+
+</mapper>
