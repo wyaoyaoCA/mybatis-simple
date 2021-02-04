@@ -13,6 +13,7 @@
         <module>mybatis-global-config</module>
         <module>mybatis-sql-mapper</module>
         <module>mybatis-sql-dynamiscSql</module>
+        <module>mybatis-cache</module>
     </modules>
 
     <dependencyManagement>

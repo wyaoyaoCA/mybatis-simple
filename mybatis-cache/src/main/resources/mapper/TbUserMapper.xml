@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    namespace: 名称空间
+    id: 唯一标识
+    resultType： 返回值类型，返回数据库的数据的数据呗，而我们已经构建了一个实体来对应数据库表，所以返回值类型，就是对应实体的全类名
+-->
+<mapper namespace="study.wyy.mybatis.cache.mapper.TbUserMapper">
+    <!--
+        1. eviction:缓存的回收策略：
+            1. LRU（默认） – 最近最少使用的：移除最长时间不被使用的对象。
+            2. FIFO – 先进先出：按对象进入缓存的顺序来移除它们。
+            3. SOFT – 软引用：移除基于垃圾回收器状态和软引用规则的对象。
+            4. WEAK – 弱引用：更积极地移除基于垃圾收集器状态和弱引用规则的对象。
+        2. flushInterval：缓存刷新间隔
+            1. 缓存多长时间清空一次，默认不清空，设置一个毫秒值
+        3.  readOnly:是否只读
+            1. true：只读；mybatis认为所有从缓存中获取数据的操作都是只读操作，不会修改数据。mybatis为了加快获取速度，直接就会将数据在缓存中的引用交给用户。不安全，速度快
+            2. false：非只读：mybatis觉得获取的数据可能会被修改。mybatis会利用序列化&反序列的技术克隆一份新的数据给你。安全，速度慢
+        4. size：缓存存放多少元素；
+        5. type：指定自定义缓存的全类名；实现Cache接口；
+    -->
+    <cache eviction="FIFO" flushInterval="60000" readOnly="false" size="1024"></cache>
+    <select id="selectById" resultType="tbUser">
+        select
+            *
+        from
+            tb_user
+        where
+            `id` = #{id}
+    </select>
+</mapper>
